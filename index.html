@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta name="description" content="Первый спринт на ЯП" />
+    <meta name="keywords" content="html, css, flex" />
+    <meta name="author" content="Никита Михайловский" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Место</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+  </head>
+
+  <body class="page">
+    <div class="page__container">
+      <header class="header">
+        <img
+          class="header__logo"
+          src="./images/header__logo.svg"
+          alt="Логотип Mesto Russia"
+        />
+      </header>
+
+      <main>
+        <section class="profile">
+          <img
+            class="profile__avatar"
+            src="./images/avatar.jpeg"
+            alt="аватар"
+          />
+          <div class="profile__info">
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <button
+              class="profile__edit-button"
+              type="button"
+              aria-label="Редактировать"
+            ></button>
+            <p class="profile__subtitle">Исследователь океана</p>
+          </div>
+          <button
+            class="profile__add-button"
+            type="button"
+            aria-label="Добавить"
+          ></button>
+        </section>
+      </main>
+
+      <section class="elements">
+        <div class="element">
+          <img class="element__image" src="./images/mos.jpeg" alt="Фото" />
+          <div class="element__like-container">
+            <h2 class="element__name">Москва</h2>
+            <div class="element__like-icon"></div>
+          </div>
+        </div>
+
+        <div class="element">
+          <img class="element__image" src="./images/nn.jpeg" alt="Фото" />
+          <div class="element__like-container">
+            <h2 class="element__name">Нижний Новгород</h2>
+            <div class="element__like-icon"></div>
+          </div>
+        </div>
+
+        <div class="element">
+          <img class="element__image" src="./images/samara.jpeg" alt="Фото" />
+          <div class="element__like-container">
+            <h2 class="element__name">Самара</h2>
+            <div class="element__like-icon"></div>
+          </div>
+        </div>
+
+        <div class="element">
+          <img class="element__image" src="./images/spb.jpeg" alt="Фото" />
+          <div class="element__like-container">
+            <h2 class="element__name">Питер</h2>
+            <div class="element__like-icon"></div>
+          </div>
+        </div>
+
+        <div class="element">
+          <img class="element__image" src="./images/tver.jpeg" alt="Фото" />
+          <div class="element__like-container">
+            <h2 class="element__name">Тверь</h2>
+            <div class="element__like-icon"></div>
+          </div>
+        </div>
+
+        <div class="element">
+          <img
+            class="element__image"
+            src="./images/vladivostok.jpeg"
+            alt="Фото"
+          />
+          <div class="element__like-container">
+            <h2 class="element__name">Владивосток</h2>
+            <div class="element__like-icon"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <h3 class="footer__author">© 2021 Mesto Russia</h3>
+      </footer>
+    </div>
+
+    <div class="popup" id="user-popup">
+      <div class="popup__container">
+        <img
+          src="./images/CloseIcon.svg"
+          alt=""
+          class="popup__close"
+          id="popup-user-close"
+        />
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="popup__form" action="#" name="userForm">
+          <input
+            type="text"
+            name="name"
+            class="popup__input"
+            placeholder="Имя"
+            id="name"
+          />
+          <input
+            type="text"
+            name="job"
+            class="popup__input"
+            placeholder="О себе"
+            id="job"
+          />
+          <button type="submit" class="popup__button" id="user-button">
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="scripts/popup.js"></script>
+  </body>
+</html>
