@@ -8,9 +8,7 @@
   background-image: url("../../../images/CloseIcon.svg");
   background-color: transparent;
   background-size: cover;
-  cursor: pointer;
   border: none;
-
 }
 
 .popup__close:hover {
