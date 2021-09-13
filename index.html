@@ -20,7 +20,7 @@
         />
       </header>
 
-      <main>
+      <main class="main">
         <section class="profile">
           <img
             class="profile__avatar"
@@ -42,75 +42,70 @@
             aria-label="Добавить"
           ></button>
         </section>
+
+        <section class="elements">
+          <div class="element">
+            <img class="element__image" src="./images/mos.jpeg" alt="Фото" />
+            <div class="element__like-container">
+              <h2 class="element__name">Москва</h2>
+              <button class="element__like-icon" type="button"></button>
+            </div>
+          </div>
+
+          <div class="element">
+            <img class="element__image" src="./images/nn.jpeg" alt="Фото" />
+            <div class="element__like-container">
+              <h2 class="element__name">Нижний Новгород</h2>
+              <button class="element__like-icon" type="button"></button>
+            </div>
+          </div>
+
+          <div class="element">
+            <img class="element__image" src="./images/samara.jpeg" alt="Фото" />
+            <div class="element__like-container">
+              <h2 class="element__name">Самара</h2>
+              <button class="element__like-icon" type="button"></button>
+            </div>
+          </div>
+
+          <div class="element">
+            <img class="element__image" src="./images/spb.jpeg" alt="Фото" />
+            <div class="element__like-container">
+              <h2 class="element__name">Питер</h2>
+              <button class="element__like-icon" type="button"></button>
+            </div>
+          </div>
+
+          <div class="element">
+            <img class="element__image" src="./images/tver.jpeg" alt="Фото" />
+            <div class="element__like-container">
+              <h2 class="element__name">Тверь</h2>
+              <button class="element__like-icon" type="button"></button>
+            </div>
+          </div>
+
+          <div class="element">
+            <img class="element__image" src="./images/vlad.jpeg" alt="Фото" />
+            <div class="element__like-container">
+              <h2 class="element__name">Владивосток</h2>
+              <button class="element__like-icon" type="button"></button>
+            </div>
+          </div>
+        </section>
       </main>
 
-      <section class="elements">
-        <div class="element">
-          <img class="element__image" src="./images/mos.jpeg" alt="Фото" />
-          <div class="element__like-container">
-            <h2 class="element__name">Москва</h2>
-            <div class="element__like-icon"></div>
-          </div>
-        </div>
-
-        <div class="element">
-          <img class="element__image" src="./images/nn.jpeg" alt="Фото" />
-          <div class="element__like-container">
-            <h2 class="element__name">Нижний Новгород</h2>
-            <div class="element__like-icon"></div>
-          </div>
-        </div>
-
-        <div class="element">
-          <img class="element__image" src="./images/samara.jpeg" alt="Фото" />
-          <div class="element__like-container">
-            <h2 class="element__name">Самара</h2>
-            <div class="element__like-icon"></div>
-          </div>
-        </div>
-
-        <div class="element">
-          <img class="element__image" src="./images/spb.jpeg" alt="Фото" />
-          <div class="element__like-container">
-            <h2 class="element__name">Питер</h2>
-            <div class="element__like-icon"></div>
-          </div>
-        </div>
-
-        <div class="element">
-          <img class="element__image" src="./images/tver.jpeg" alt="Фото" />
-          <div class="element__like-container">
-            <h2 class="element__name">Тверь</h2>
-            <div class="element__like-icon"></div>
-          </div>
-        </div>
-
-        <div class="element">
-          <img
-            class="element__image"
-            src="./images/vladivostok.jpeg"
-            alt="Фото"
-          />
-          <div class="element__like-container">
-            <h2 class="element__name">Владивосток</h2>
-            <div class="element__like-icon"></div>
-          </div>
-        </div>
-      </section>
-
       <footer class="footer">
-        <h3 class="footer__author">© 2021 Mesto Russia</h3>
+        <p class="footer__author">© 2021 Mesto Russia</p>
       </footer>
     </div>
 
     <div class="popup" id="user-popup">
       <div class="popup__container">
-        <img
-          src="./images/CloseIcon.svg"
-          alt=""
+        <button
           class="popup__close"
           id="popup-user-close"
-        />
+          type="button"
+        ></button>
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" action="#" name="userForm">
           <input
