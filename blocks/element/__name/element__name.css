@@ -9,4 +9,5 @@
   white-space: nowrap;
   overflow: hidden;
   color: black;
+  max-width: 224px;
 }
