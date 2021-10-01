@@ -136,7 +136,7 @@ function closePofilePopup() {
 }
 
 
-function formSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
    evt.preventDefault();
    profileName.textContent = nameInput.value;
    profileJob.textContent = jobInput.value;
@@ -144,12 +144,12 @@ function formSubmitHandler(evt) {
 }
 
 
-userFormElement.addEventListener('submit', formSubmitHandler);
+userFormElement.addEventListener('submit', handleProfileFormSubmit);
 profileEditButton.addEventListener('click', openPofilePopup);
 closeUserPopupCard.addEventListener('click', closePofilePopup);
 
 formElementAddCard.addEventListener('submit', handleCardFormSubmit);
 openPopupAddCardButton.addEventListener('click', () => openPopup(popupAddCard));
 
-popupCloseBigImg.addEventListener('click', popupBigSizeImg);
+closePopupAddCardButton.addEventListener('click', () => closePopup(popupAddCard));
 popupCloseBigImg.addEventListener('click', () => closePopup(popupBigSizeImg));
