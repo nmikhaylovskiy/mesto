@@ -43,3 +43,7 @@
 @import url("../blocks/popup/__name-big-img/popup__name-big-img.css");
 
 @import url("../blocks/main/main.css");
+
+@import url("../blocks/error/error.css");
+@import url("../blocks/error/_visable/error_visable.css");
+@import url("../blocks/popup/__button/_invalid/popup__button_invalid.css");

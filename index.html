@@ -51,9 +51,15 @@
     <div class="popup__container">
       <button class="popup__close" id="popup-user-close" type="button"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" action="#" name="user-form" id = "user-form">
-        <input type="text" name="name" class="popup__input" placeholder="Имя" id="name" />
-        <input type="text" name="job" class="popup__input" placeholder="О себе" id="job" />
+      <form class="popup__form" action="#" name="user-form" id="user-form">
+        <input type="text" name="name" class="popup__input" placeholder="Имя" id="name" minlength="2" maxlength="40"
+          required />
+        <span id="name-error" class="error error_visible"></span>
+
+        <input type="text" name="job" class="popup__input" placeholder="О себе" id="job" minlength="2" maxlength="200"
+          required />
+        <span id="job-error" class="error error_visible"> </span>
+
         <button type="submit" class="popup__button" id="user-button">
           Сохранить
         </button>
@@ -67,8 +73,14 @@
       <button type="button" class="popup__close" id="popup-add-close"></button>
       <h2 class="popup__title">Новое место</h2>
       <form name="profile-edit" class="popup__form" id="popup-form">
-        <input class="popup__input" type="text" name="Name" placeholder="Название" id="name-card">
-        <input class="popup__input" type="text" name="Link to picture" placeholder="Ссылка на картинку" id="popup-link">
+        <input class="popup__input" type="text" name="Name" placeholder="Название" id="name-card" minlength="2"
+          maxlength="30" required>
+        <span id="name-card-error" class="error error_visible">Введите адрес сайта.</span>
+
+        <input class="popup__input" type="text" name="Link to picture" placeholder="Ссылка на картинку" id="popup-link"
+          minlength="2" required>
+        <span id="popup-link-error" class="error error_visible">Введите адрес сайта.</span>
+
         <button class="popup__button" type="submit">
           Сохранить
         </button>
@@ -89,6 +101,8 @@
 
 
   <script src="scripts/popup.js"></script>
+  <script src="scripts/validate.js"></script>
+
 </body>
 
 </html>

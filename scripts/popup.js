@@ -81,7 +81,7 @@ function handlePreviewPicture(link, name) {
    openPopup(popupBigSizeImg);
    popupBigImg.src = link;
    popupNameBigImg.textContent = name;
-   popupBigImg.alt = name; 
+   popupBigImg.alt = name;
 }
 
 //создание карточки
@@ -131,6 +131,20 @@ function closePopup(popup) {
    popup.classList.remove('popup_opened');
 }
 
+function closeByEscape(e) {
+   if (e.key === 'Escape') {
+      let activePopup = document.querySelector('.popup_opened')
+      closePopup(activePopup)
+   }
+}
+
+function closeOnOverlay(e) {
+   if (e.target.classList.contains('popup_opened')) {
+      closePopup(e.target)
+   }
+}
+
+
 function closePofilePopup() {
    closePopup(userPopup);
 }
@@ -143,6 +157,8 @@ function handleProfileFormSubmit(evt) {
    closePopup(userPopup)
 }
 
+document.addEventListener('keydown', closeByEscape)
+document.addEventListener('click', closeOnOverlay)
 
 userFormElement.addEventListener('submit', handleProfileFormSubmit);
 profileEditButton.addEventListener('click', openPofilePopup);
