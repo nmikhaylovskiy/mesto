@@ -118,6 +118,7 @@ initialCards.forEach((card) => {
 
 function openPopup(popup) {
    popup.classList.add('popup_opened');
+   document.addEventListener('keydown', closeByEscape)
 }
 
 function openPofilePopup() {
@@ -129,11 +130,12 @@ function openPofilePopup() {
 
 function closePopup(popup) {
    popup.classList.remove('popup_opened');
+   document.removeEventListener('keydown', closeByEscape)
 }
 
 function closeByEscape(e) {
    if (e.key === 'Escape') {
-      let activePopup = document.querySelector('.popup_opened')
+      const activePopup = document.querySelector('.popup_opened')
       closePopup(activePopup)
    }
 }
@@ -157,7 +159,6 @@ function handleProfileFormSubmit(evt) {
    closePopup(userPopup)
 }
 
-document.addEventListener('keydown', closeByEscape)
 document.addEventListener('click', closeOnOverlay)
 
 userFormElement.addEventListener('submit', handleProfileFormSubmit);
