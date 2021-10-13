@@ -75,6 +75,7 @@ const setEventListeners = (
 ) => {
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
+    event.target.querySelector(submitButtonSelector).classList.toggle(inactiveButtonClass)
   });
 
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
@@ -116,17 +117,11 @@ const enableValidation = (config) => {
   });
 };
 
-const handleValidation = () => {
-  enableValidation({
-    formSelector: ".popup__form",
-    inputSelector: ".popup__input",
-    submitButtonSelector: ".popup__button",
-    inactiveButtonClass: "popup__button_invalid",
-    inputErrorClass: "popup__field_type_error",
-    errorClass: "error_visible",
-  });
-};
-
-handleValidation();
-
-document.addEventListener("click", handleValidation);
+enableValidation({
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_invalid",
+  inputErrorClass: "popup__field_type_error",
+  errorClass: "error_visible",
+});
