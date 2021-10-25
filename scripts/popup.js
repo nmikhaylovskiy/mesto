@@ -1,3 +1,4 @@
+import { Card } from './Card.js';
 
 
 
@@ -63,7 +64,7 @@ const initialCards = [
 // добавление записи
 function handleCardFormSubmit(evt) {
    evt.preventDefault();
-   addCard(title.value, image.value);
+   renderCard(title.value, image.value);
    title.value = '';
    image.value = '';
    closePopup(popupAddCard);
@@ -77,40 +78,32 @@ function addCard(imageValue, nameValue) {
 }
 
 //обработка клика
-function handlePreviewPicture(link, name) {
+function handlePreviewPicture(event) {
    openPopup(popupBigSizeImg);
-   popupBigImg.src = link;
-   popupNameBigImg.textContent = name;
-   popupBigImg.alt = name;
+   popupBigImg.src = event.target.src;
+   popupNameBigImg.textContent = event.target.parentNode.textContent;
+   popupBigImg.alt = event.target.parentNode.textContent;
 }
 
 //создание карточки
-function createCard(imageValue, nameValue) {
-   const cardTemplate = document.querySelector('#element-template').content;
-   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-   const cardImage = cardElement.querySelector('.element__image');
-   cardImage.src = imageValue;
-   cardImage.alt = nameValue
-   cardElement.querySelector('.element__like-icon').addEventListener('click', function (evt) {
-      evt.target.classList.toggle('element__like-icon_active');
-   });
+function createCard(name, link) {
+   return new Card(name, link,  '#element-template', handlePreviewPicture);
 
-   cardElement.querySelector('.element__delete').addEventListener('click', function (evt) {
-      evt.target.closest('.element').remove();
-   });
-
-   cardElement.querySelector('.element__name').textContent = nameValue;
-
-   cardImage.addEventListener('click', () => handlePreviewPicture(imageValue, nameValue));
-   return cardElement;
 }
 
+function renderCard(name, link) {
+   console.log("render", name, link, cardContainer)
+   const card = createCard(name, link)
+   cardContainer.prepend(card.generateCard());
+ }
+ 
 
-//загрузка карточек из массива
-initialCards.forEach((card) => {
-   const newCard = createCard(card.link, card.name);
-   cardContainer.prepend(newCard);
-});
+function renderInitialCards() {
+   initialCards.forEach((card) => renderCard(card.name, card.link))
+ }
+ 
+ renderInitialCards();
+
 
 
 
