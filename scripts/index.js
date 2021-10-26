@@ -65,7 +65,8 @@ const initialCards = [
 // добавление записи
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  renderCard(title.value, image.value);
+  console.log(title.value, image.value)
+  renderCard(image.value,title.value);
   title.value = '';
   image.value = '';
   closePopup(popupAddCard);

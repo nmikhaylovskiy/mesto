@@ -22,8 +22,10 @@ export class Card {
     this._element = null;
   }
   _likeCard() {
-    const buttonLike = this._element.querySelector('.card__like-button');
-    buttonLike.classList.toggle('card__like-button_fill');
+    const buttonLike = this._element.querySelector('.element__like-icon');
+    console.log(buttonLike)
+    buttonLike.classList.toggle('element__like-icon_active');
+    
   }
   _setEventListeners() {
     this._element.querySelector('.element__like-icon').addEventListener('click', () => {
