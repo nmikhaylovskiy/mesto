@@ -13,7 +13,6 @@ export default class FormValidator {
   }
 
   _showInputError(inputElement, errorMessage) {
-    console.error(inputElement);
     inputElement.classList.add(this.config.inputErrorClass);
     errorMessage.textContent = inputElement.validationMessage;
     errorMessage.classList.add(this.config.errorClass);
@@ -70,12 +69,7 @@ export default class FormValidator {
     })
 
     const inputList = Array.from(this._formElement.querySelectorAll(this.config.inputSelector));
-    this._toggleButtonState(
-      this._formElement,
-      inputList,
-      this.config.submitButtonSelector,
-      this.config.inactiveButtonClass
-    );
+    this._toggleButtonState();
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(
@@ -88,16 +82,6 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    const formList = document.querySelectorAll(this.config.formSelector);
-    formList.forEach((formElement) => {
-      this._setEventListeners(
-        formElement,
-        this.config.inputSelector,
-        this.config.submitButtonSelector,
-        this.config.inputErrorClass,
-        this.config.errorClass,
-        this.config.inactiveButtonClass
-      );
-    });
+      this._setEventListeners();
   }
 }

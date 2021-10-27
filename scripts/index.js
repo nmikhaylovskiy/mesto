@@ -65,7 +65,6 @@ const initialCards = [
 // добавление записи
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  console.log(title.value, image.value)
   renderCard(image.value,title.value);
   title.value = '';
   image.value = '';
@@ -169,7 +168,7 @@ const validationConfig = {
   errorClass: 'error_visible'
 };
 
-const validformSubmitCard = new FormValidator(validationConfig, popupAddCard);
-validformSubmitCard.enableValidation();
+const validFormSubmitCard = new FormValidator(validationConfig, popupAddCard);
+validFormSubmitCard.enableValidation();
 const validFormProfile = new FormValidator(validationConfig, userPopup);
 validFormProfile.enableValidation();
