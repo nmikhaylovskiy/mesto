@@ -1,0 +1,14 @@
+.element__like-icon {
+  width: 22px;
+  height: 19px;
+  background-image: url("../../../images/like.svg");
+  color: #000000;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  background-size: cover;
+}
+
+.element__like-icon:hover {
+  opacity: 0.5;
+}

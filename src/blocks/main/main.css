@@ -1,0 +1,11 @@
+.main{
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 900px) {
+    .main {
+      margin-left: 19px;
+      margin-right: 19px;
+    }
+  }
