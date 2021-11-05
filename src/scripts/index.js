@@ -2,8 +2,9 @@ import { Card } from './Card.js';
 import "../pages/index.css"
 
 import FormValidator from "./FormValidator.js";
+import Section from './Section.js';
 
-
+import {initialCards, userInfoData } from './constants.js'
 
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -34,44 +35,31 @@ const popupCloseBigImg = document.querySelector('#popup-img-close');
 const popupBigImg = document.querySelector('.popup__big-img');
 const popupNameBigImg = document.querySelector('.popup__name-big-img');
 
+const sectionCards = new Section({items: initialCards.reverse(), renderer: createCard}, '.elements')
 
-// список карточек
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+//создание карточки
+function createCard(params) {
+  console.log("create", params, params)
+  return new Card(params.name, params.link, '#element-template', handlePreviewPicture).generateCard();
+
+}
+
 
 
 // добавление записи
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  renderCard(image.value,title.value);
+  cardContainer.prepend(createCard({name: image.value, link: title.value}))
+
   title.value = '';
   image.value = '';
   closePopup(popupAddCard);
 }
+
+sectionCards.renderItems() // заполнение галереи с карточками
+
+
+
 
 //обработка клика
 function handlePreviewPicture(event) {
@@ -80,29 +68,6 @@ function handlePreviewPicture(event) {
   popupNameBigImg.textContent = event.target.parentNode.textContent;
   popupBigImg.alt = event.target.parentNode.textContent;
 }
-
-//создание карточки
-function createCard(name, link) {
-  return new Card(name, link, '#element-template', handlePreviewPicture);
-
-}
-
-function renderCard(name, link) {
-  console.log("render", name, link, cardContainer)
-  const card = createCard(name, link)
-  cardContainer.prepend(card.generateCard());
-}
-
-
-function renderInitialCards() {
-  initialCards.forEach((card) => renderCard(card.name, card.link))
-}
-
-renderInitialCards();
-
-
-
-
 
 
 function openPopup(popup) {
