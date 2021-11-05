@@ -4,7 +4,12 @@ import "../pages/index.css"
 import FormValidator from "./FormValidator.js";
 import Section from './Section.js';
 
-import {initialCards, userInfoData } from './constants.js'
+import { initialCards, userInfoData } from './constants.js'
+
+import UserInfo from './UserInfo.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+
 
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -28,14 +33,25 @@ const popupAddCard = document.querySelector('#edit-popup');
 const closePopupAddCardButton = document.querySelector('#popup-add-close');
 
 
+const sectionCards = new Section({ items: initialCards.reverse(), renderer: createCard }, '.elements')
 
-const popupBigSizeImg = document.querySelector('#popup-image');
-const popupOpenBigImg = document.querySelector('.element__image');
-const popupCloseBigImg = document.querySelector('#popup-img-close');
-const popupBigImg = document.querySelector('.popup__big-img');
-const popupNameBigImg = document.querySelector('.popup__name-big-img');
 
-const sectionCards = new Section({items: initialCards.reverse(), renderer: createCard}, '.elements')
+const userInfo = new UserInfo({ nameElement: '.profile__title', captionElement: '.profile__subtitle' })
+userInfo.setUserInfo(userInfoData)
+
+
+const myPopupWithImage = new PopupWithImage('#popup-image', closeByEscape)
+myPopupWithImage.setEventListeners()
+
+const popupProfile = new PopupWithForm('#user-popup', closeByEscape, handleProfileFormSubmit)
+popupProfile.setEventListeners()
+
+const popupCard = new PopupWithForm('#edit-popup', closeByEscape, handleCardFormSubmit)
+popupCard.setEventListeners()
+
+
+
+
 
 //создание карточки
 function createCard(params) {
@@ -49,11 +65,11 @@ function createCard(params) {
 // добавление записи
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  cardContainer.prepend(createCard({name: image.value, link: title.value}))
+  cardContainer.prepend(createCard({ name: image.value, link: title.value }))
 
   title.value = '';
   image.value = '';
-  closePopup(popupAddCard);
+  popupCard.close()
 }
 
 sectionCards.renderItems() // заполнение галереи с карточками
@@ -63,10 +79,7 @@ sectionCards.renderItems() // заполнение галереи с карто�
 
 //обработка клика
 function handlePreviewPicture(event) {
-  openPopup(popupBigSizeImg);
-  popupBigImg.src = event.target.src;
-  popupNameBigImg.textContent = event.target.parentNode.textContent;
-  popupBigImg.alt = event.target.parentNode.textContent;
+  myPopupWithImage.open(event.target.parentNode.textContent, event.target.src)
 }
 
 
@@ -76,9 +89,11 @@ function openPopup(popup) {
 }
 
 function openPofilePopup() {
-  openPopup(userPopup);
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+  popupProfile.open()
+
+  const info = userInfo.getUserInfo()
+  nameInput.value = info.name;
+  jobInput.value = info.caption;
 }
 
 
@@ -94,36 +109,22 @@ function closeByEscape(e) {
   }
 }
 
-function closeOnOverlay(e) {
-  if (e.target.classList.contains('popup_opened')) {
-    closePopup(e.target)
-  }
-}
-
-
-function closePofilePopup() {
-  closePopup(userPopup);
-}
 
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(userPopup)
+
+  userInfo.setUserInfo(popupProfile._getInputValues())
+
+  popupProfile.close()
 }
 
-document.addEventListener('click', closeOnOverlay)
 
-userFormElement.addEventListener('submit', handleProfileFormSubmit);
 profileEditButton.addEventListener('click', openPofilePopup);
-closeUserPopupCard.addEventListener('click', closePofilePopup);
 
-formElementAddCard.addEventListener('submit', handleCardFormSubmit);
 openPopupAddCardButton.addEventListener('click', () => openPopup(popupAddCard));
 
 closePopupAddCardButton.addEventListener('click', () => closePopup(popupAddCard));
-popupCloseBigImg.addEventListener('click', () => closePopup(popupBigSizeImg));
 
 
 const validationConfig = {

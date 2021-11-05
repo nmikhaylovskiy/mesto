@@ -1,4 +1,4 @@
-export const userInfoData = {name: 'Билл Клинтон', caption: 'Экс-президент США'}
+export const userInfoData = {name: 'Жак иф элз', caption: 'Исследователь JS'}
 
 
 
