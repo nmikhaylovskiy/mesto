@@ -10,8 +10,8 @@ export default class UserInfo {
         return { name, caption }
     }
 
-    setUserInfo({ name, caption }) {
+    setUserInfo({ name, job }) {
         this._profileName.textContent = name
-        this._profileCaption.textContent = caption
+        this._profileCaption.textContent = job
     }
 }

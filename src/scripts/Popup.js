@@ -1,28 +1,35 @@
 export default class Popup {
-    constructor(selector, callback) {
-        this._element = document.querySelector(selector)
-        this._handleEsc = callback
+    constructor(popupSelector) {
+        this._popupElement = document.querySelector(popupSelector)
+        this._closeByOverlayClick = this._closeByOverlayClick.bind(this)
+        this.close = this.close.bind(this)
+        this._closeByEcs = this._closeByEcs.bind(this)
     }
 
     _closeByOverlayClick(evt) {
         if (evt.target.classList.contains('popup')) {
             this.close()
         }
+
+    }
+
+    _closeByEcs(evt) {
+        if (evt.key === 'Escape')
+            this.close()
     }
 
     open() {
-        this._element.classList.add('popup_opened')
-        document.addEventListener('keydown', this._handleEsc)
+        this._popupElement.classList.add('popup_opened')
+        document.addEventListener('keydown', this._closeByEcs )
     }
 
     close() {
-        const popupOpened = document.querySelector('.popup_opened')
-        popupOpened.classList.remove('popup_opened')
-        document.removeEventListener('keydown', this._handleEsc)
+        this._popupElement.classList.remove('popup_opened')
+        document.removeEventListener('keydown', this._closeByEcs)
     }
 
     setEventListeners() {
-        this._element.querySelector('.popup__close').addEventListener('click', this.close.bind(this))
-        this._element.addEventListener('mousedown', this._closeByOverlayClick.bind(this))
+        this._popupElement.querySelector('.popup__close').addEventListener('click', this.close)
+        this._popupElement.addEventListener('mousedown', this._closeByOverlayClick)
     }
 }
