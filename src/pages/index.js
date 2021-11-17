@@ -6,6 +6,8 @@ import { initialCards, userInfoData } from '../utils/constants.js'
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import Api from '../components/Api.js';
+
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const userPopup = document.querySelector('#user-popup');
@@ -16,6 +18,29 @@ const title = document.querySelector('#popup-link');
 const cardContainer = document.querySelector('.elements');
 const openPopupAddCardButton = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#edit-popup');
+
+
+////////  --->>>>>
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-30/',
+  headers: {
+      authorization: 'cd58889d-4007-40b0-abc9-c4f5ad470e2a',
+      'Content-Type': 'application/json'
+  }
+});
+
+Promise.all([api.getUserInfo()])
+  .then(([userData, userCard]) => {
+    console.log(">>>>>>>> userData", userData)
+    handleProfileFormSubmit(userData);
+      // handleUserCards(userCard)
+  })
+  .catch((err) => {
+      console.log(`Вот, что произошло. ${err}`);
+  });
+
+
+//////////
 
 const sectionCards = new Section({ items: initialCards.reverse(), renderer: createCard }, '.elements')
 sectionCards.renderItems() // заполнение галереи с карточками
@@ -34,7 +59,6 @@ popupCard.setEventListeners()
 
 //создание карточки
 function createCard(params) {
-  console.log("create", params, params)
   return new Card(params.name, params.link, '#element-template', handlePreviewPicture).generateCard();
 
 }
