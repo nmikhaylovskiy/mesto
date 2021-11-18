@@ -29,11 +29,15 @@ const api = new Api({
   }
 });
 
-Promise.all([api.getUserInfo()])
+Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, userCard]) => {
-    console.log(">>>>>>>> userData", userData)
-    handleProfileFormSubmit(userData);
-      // handleUserCards(userCard)
+    console.log(userCard)
+    //TODO, как-то ставить аватар
+    userInfo.setUserInfo({"name":userData.name,job: userData.about})
+    for (let i in userCard){
+      cardContainer.prepend(createCard({ name: userCard[i].name, link: userCard[i].link }))
+
+    }
   })
   .catch((err) => {
       console.log(`Вот, что произошло. ${err}`);
@@ -42,8 +46,7 @@ Promise.all([api.getUserInfo()])
 
 //////////
 
-const sectionCards = new Section({ items: initialCards.reverse(), renderer: createCard }, '.elements')
-sectionCards.renderItems() // заполнение галереи с карточками
+
 
 const userInfo = new UserInfo({ nameElement: '.profile__title', captionElement: '.profile__subtitle' })
 userInfo.setUserInfo(userInfoData)
@@ -66,7 +69,7 @@ function createCard(params) {
 // добавление записи
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-  cardContainer.prepend(createCard({ name: image.value, link: title.value }))
+  api.uploadNewCard({ name: image.value, link: title.value })
 
   title.value = '';
   image.value = '';
@@ -92,6 +95,8 @@ function openPofilePopup() {
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
+  //
+  api.setUserInfo(popupProfile._getInputValues())
   userInfo.setUserInfo(popupProfile._getInputValues())
 
   popupProfile.close()
