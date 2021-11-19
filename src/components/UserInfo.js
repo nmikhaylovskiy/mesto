@@ -1,7 +1,10 @@
 export default class UserInfo {
-    constructor({ nameElement, captionElement }) {
+    constructor({ nameElement, captionElement, userAvatar }) {
+        console.log(">>>>>", userAvatar)
         this._profileName = document.querySelector(nameElement)
         this._profileCaption = document.querySelector(captionElement)
+        this._userAvatar = document.querySelector(userAvatar);
+
     }
 
     getUserInfo() {
@@ -14,4 +17,8 @@ export default class UserInfo {
         this._profileName.textContent = name
         this._profileCaption.textContent = job
     }
+    setUserAvatar(userLink) {
+        console.log("IN SET", userLink, this.userAvatar)
+        this._userAvatar.src = userLink;
+    };
 }

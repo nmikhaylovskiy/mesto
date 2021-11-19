@@ -18,6 +18,9 @@ const title = document.querySelector('#popup-link');
 const cardContainer = document.querySelector('.elements');
 const openPopupAddCardButton = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#edit-popup');
+const avatarPopup = document.querySelector('#avatar-popup');
+const buttonEditAvatar = document.querySelector('.profile__edit-avatar');
+const newAvatarVal =document.querySelector('#avatar-input');
 
 
 ////////  --->>>>>
@@ -33,14 +36,16 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, userCard]) => {
     console.log(userCard)
     //TODO, как-то ставить аватар
-    userInfo.setUserInfo({"name":userData.name,job: userData.about})
+    console.log("avatarinfo", userData.avatar)
+    userInfo.setUserInfo({"name":userData.name, "job": userData.about})
+    userInfo.setUserAvatar(userData.avatar)
     for (let i in userCard){
       cardContainer.prepend(createCard({ name: userCard[i].name, link: userCard[i].link }))
 
     }
   })
   .catch((err) => {
-      console.log(`Вот, что произошло. ${err}`);
+      console.error(`Вот, что произошло. ${err}`);
   });
 
 
@@ -48,7 +53,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 
 
-const userInfo = new UserInfo({ nameElement: '.profile__title', captionElement: '.profile__subtitle' })
+const userInfo = new UserInfo({ nameElement: '.profile__title', captionElement: '.profile__subtitle', userAvatar : ".profile__avatar"})
 userInfo.setUserInfo(userInfoData)
 
 const myPopupWithImage = new PopupWithImage('#popup-image')
@@ -60,9 +65,28 @@ popupProfile.setEventListeners()
 const popupCard = new PopupWithForm('#edit-popup', handleCardFormSubmit)
 popupCard.setEventListeners()
 
+
+
+const avatarEdit = new PopupWithForm('#avatar-popup', handleAvatarChange) 
+avatarEdit.setEventListeners()
+
 //создание карточки
 function createCard(params) {
   return new Card(params.name, params.link, '#element-template', handlePreviewPicture).generateCard();
+
+}
+
+function handleAvatarChange(evt){
+  console.log("@!!!", newAvatarVal.value)
+  evt.preventDefault();
+
+  api.loadUserAvatar(newAvatarVal.value).then(newData=>     
+    {
+      console.log(newData)
+    userInfo.setUserAvatar(newData.avatar)
+    }
+  )
+  avatarEdit.close()
 
 }
 
@@ -104,6 +128,7 @@ function handleProfileFormSubmit(evt) {
 
 profileEditButton.addEventListener('click', openPofilePopup);
 openPopupAddCardButton.addEventListener('click', openCardPopup);
+buttonEditAvatar.addEventListener("click", () => avatarEdit.open())
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -118,3 +143,5 @@ const validFormSubmitCard = new FormValidator(validationConfig, popupAddCard);
 validFormSubmitCard.enableValidation();
 const validFormProfile = new FormValidator(validationConfig, userPopup);
 validFormProfile.enableValidation();
+// const validationAvatar = new FormValidator(validationConfig, avatarPopup);
+// validationAvatar.enableValidation();

@@ -19,7 +19,9 @@
 
     <main class="main">
       <section class="profile">
+        <button aria-label="Редактировать аватар" class="profile__edit-avatar">
         <img class="profile__avatar" src="<%=require('./images/avatar.jpeg')%>" alt="аватар" />
+        </button>
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
@@ -101,6 +103,24 @@
     </div>
   </div>
 
+
+  <div class="popup" id="avatar-popup">
+    <div class="popup__container">
+      <button type="button" class="popup__close" id="close-edit-avatar"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form name="avatar-edit" class="popup__form" id="avatar-form">
+        <input class="popup__input" type="url" name="avatar" placeholder="avatar" id="avatar-input"
+      required
+        >
+
+        <span id="popup-link-error" class="error">Введите адрес картинки.</span>
+
+        <button class="popup__button" type="submit">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
 
 
 
