@@ -13,10 +13,7 @@ export default class Api {
 
 
   getUserInfo() {
-    console.log("KIKI", this._baseUrl, this._headers)
 
-    console.log("fetch", `${this._baseUrl}users/me`)
-    // https://nomoreparties.co/v1/cohort-30/users/me - тоже не проходит
     return fetch(`${this._baseUrl}users/me `, {
       method: 'GET',
       headers: {
@@ -90,5 +87,39 @@ export default class Api {
       })
   };
 
+
+  setLike(id) {
+    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+      .then((res) => {
+        return this._checkServerResponse(res);
+      })
+  };
+
+  removeLike(id) {
+    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then((res) => {
+        return this._checkServerResponse(res);
+      })
+  };
+
+
+  loadUserAvatar(data) {
+    return fetch(`${this._baseUrl}users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data
+      })
+    })
+      .then((res) => {
+        return this._checkServerResponse(res);
+      })
+  };
 
 }

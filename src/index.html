@@ -8,19 +8,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css" />
+  <link rel="stylesheet" src="./pages/index.css" />
 </head>
 
 <body class="page">
   <div class="page__container">
     <header class="header">
-      <img class="header__logo" src="<%=require('./images/header__logo.svg')%>" alt="Лого">
+      <img class="header__logo" src="<%=require('./images/header__logo.svg')%>" alt="Лого" />
     </header>
 
     <main class="main">
       <section class="profile">
         <button aria-label="Редактировать аватар" class="profile__edit-avatar">
-        <img class="profile__avatar" src="<%=require('./images/avatar.jpeg')%>" alt="аватар" />
+          <img class="profile__avatar" src="<%=require('./images/avatar.jpeg')%>" alt="аватар" />
         </button>
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -34,10 +34,13 @@
         <template id="element-template">
           <div class="element">
             <button class="element__delete" type="button"></button>
-            <img class="element__image" src="#">
+            <img class="element__image" src="#" />
             <div class="element__like-container">
               <h2 class="element__name"></h2>
-              <button class="element__like-icon" type="button"></button>
+              <div class="element__like-block">
+                <button class="element__like-icon" type="button"></button>
+                <p class="element__like-count"></p>
+              </div>
             </div>
           </div>
         </template>
@@ -53,15 +56,13 @@
     <div class="popup__container">
       <button class="popup__close" id="popup-user-close" type="button"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" action="#" name="user-form" id = "user-form">
-        <input type="text" name="name" class="popup__input" placeholder="Имя" id="name" 
-        minlength="2" maxlength="40" required 
-        />
+      <form class="popup__form" action="#" name="user-form" id="user-form">
+        <input type="text" name="name" class="popup__input" placeholder="Имя" id="name" minlength="2" maxlength="40"
+          required />
         <span id="name-error" class="error"></span>
 
-        <input type="text" name="job" class="popup__input" placeholder="О себе" id="job" 
-          minlength="2" maxlength="200" required
-        />
+        <input type="text" name="job" class="popup__input" placeholder="О себе" id="job" minlength="2" maxlength="200"
+          required />
         <span id="job-error" class="error"> </span>
 
         <button type="submit" class="popup__button" id="user-button">
@@ -71,61 +72,60 @@
     </div>
   </div>
 
-
   <div class="popup" id="edit-popup">
     <div class="popup__container">
       <button type="button" class="popup__close" id="popup-add-close"></button>
       <h2 class="popup__title">Новое место</h2>
       <form name="profile-edit" class="popup__form" id="popup-form">
-        <input class="popup__input" type="text" name="Name" placeholder="Название" id="name-card"
-        minlength="2" maxlength="30" required
-        >
+        <input class="popup__input" type="text" name="Name" placeholder="Название" id="name-card" minlength="2"
+          maxlength="30" required />
         <span id="name-card-error" class="error">Введите адрес сайта.</span>
 
         <input class="popup__input" type="text" name="Link to picture" placeholder="Ссылка на картинку" id="popup-link"
-        minlength="2" required
-        >
+          minlength="2" required />
         <span id="popup-link-error" class="error">Введите адрес сайта.</span>
 
-        <button class="popup__button" type="submit">
-          Сохранить
-        </button>
+        <button class="popup__button" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
 
-
   <div class="popup" id="popup-image">
     <div class="popup__content-big-image">
-      <img class="popup__big-img" src="#">
+      <img class="popup__big-img" src="#" />
       <p class="popup__name-big-img"></p>
       <button class="popup__close" type="button" id="popup-img-close"></button>
     </div>
   </div>
-
 
   <div class="popup" id="avatar-popup">
     <div class="popup__container">
       <button type="button" class="popup__close" id="close-edit-avatar"></button>
       <h2 class="popup__title">Обновить аватар</h2>
       <form name="avatar-edit" class="popup__form" id="avatar-form">
-        <input class="popup__input" type="url" name="avatar" placeholder="avatar" id="avatar-input"
-      required
-        >
+        <input class="popup__input" type="url" name="avatar" placeholder="Введите ссылку на картинку" id="avatar-input"
+          required />
 
-        <span id="popup-link-error" class="error">Введите адрес картинки.</span>
+        <span id="avatar-input-error" class="error">Введите адрес картинки.</span>
 
-        <button class="popup__button" type="submit">
-          Сохранить
+        <button class="popup__button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup" id="submit-delete-popup">
+    <div class="popup__container">
+      <button class="popup__close" type="button"></button>
+      <h3 class="popup__title">Вы уверены</h3>
+      <form class="popup__form" action="#" name="user-form" id="user-form">
+        <button type="submit" class="popup__button" id="user-button">
+          Да
         </button>
       </form>
     </div>
   </div>
 
-
-
-  <script src="pages/index.js" type = "module"></script>
-
+  <script src="pages/index.js" type="module"></script>
 </body>
 
 </html>
