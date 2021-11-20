@@ -35,7 +35,6 @@ const api = new Api({
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, userCard]) => {
-    console.log(">>>>", userData.name)
     userInfo.setUserInfo({ "name": userData.name, "job": userData.about, "id": userData._id })
     userInfo.setUserAvatar(userData.avatar)
     for (let i = userCard.length - 1; i > 0; i--) {
@@ -44,7 +43,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     }
   })
   .catch((err) => {
-    console.error(`Ошбика: ${err}`);
+    console.error(`Ошибка. ${err}`);
   });
 
 
@@ -62,6 +61,7 @@ const popupProfile = new PopupWithForm('#user-popup', event => {
   event.preventDefault();
   popupProfile.showSavingText(true)
   handleProfileFormSubmit(event).finally(() => {
+    popupProfile.close()
     popupProfile.showSavingText(false)
 
   })
@@ -155,7 +155,6 @@ function openPofilePopup() {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   userInfo.setUserInfo(popupProfile._getInputValues())
-  popupProfile.close()
 
   return api.setUserInfo(popupProfile._getInputValues())
 
