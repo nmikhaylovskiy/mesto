@@ -16,17 +16,14 @@ export default class Api {
 
     return fetch(`${this._baseUrl}users/me `, {
       method: 'GET',
-      headers: {
-        authorization: 'cd58889d-4007-40b0-abc9-c4f5ad470e2a',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
 
 
     })
       .then((res) => {
         console.log(">>>> res", res)
         return this._checkServerResponse(res);
-      })
+      }).catch(err => console.error(err))
   };
 
   setUserInfo(data) {
@@ -41,22 +38,22 @@ export default class Api {
       .then((res) => {
         console.log(">>>>>", res, data)
         return this._checkServerResponse(res);
-      })
+      }).catch(err => console.error(err))
   };
 
 
-   loadUserAvatar(data) {
-        return fetch(`${this._baseUrl}users/me/avatar`, {
-            method: 'PATCH',
-            headers: this._headers,
-            body: JSON.stringify({
-                avatar: data
-            })
-        })
-            .then((res) => {
-                return this._checkServerResponse(res);
-            })
-    };
+  loadUserAvatar(data) {
+    return fetch(`${this._baseUrl}users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data
+      })
+    })
+      .then((res) => {
+        return this._checkServerResponse(res);
+      }).catch(err => console.error(err))
+  };
 
 
 
@@ -71,11 +68,11 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      });
+      }).catch(err => console.error(err))
   };
 
   uploadNewCard(data) {
-    console.log(data)
+    console.error(data)
     return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
       headers: this._headers,
@@ -86,7 +83,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      })
+      }).catch(err => console.error(err))
   };
 
   deleteCard(id) {
@@ -96,7 +93,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      })
+      }).catch(err => console.error(err))
   };
 
 
@@ -107,7 +104,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      })
+      }).catch(err => console.error(err))
   };
 
   removeLike(id) {
@@ -117,9 +114,9 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      })
+      }).catch(err => console.error(err))
   };
 
-  
+
 
 }

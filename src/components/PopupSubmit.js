@@ -9,10 +9,6 @@ export default class PopupSubmit extends Popup {
         this._elementForDelete;
     }
 
-    close() {
-        super.close()
-        this._formElement.reset()
-    }
 
     open(element, cardId) {
         super.open()
@@ -22,6 +18,11 @@ export default class PopupSubmit extends Popup {
 
     setEventListeners() {
         super.setEventListeners()
-        this._formElement.addEventListener('submit', () => this._handleFormSubmit(this._elementForDelete, this._cardForDeleteId))
+        this._formElement.addEventListener('submit', (event) => {
+            event.preventDefault()
+            return this._handleFormSubmit(this._elementForDelete, this._cardForDeleteId).then(() => {
+                this.close();
+            }).catch(err => err)
+        })
     }
 }

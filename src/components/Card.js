@@ -33,21 +33,18 @@ export class Card {
   }
 
   _deleteCard() {
-    this._handleDelete(this._element, this._id);
-    // this._element.remove();
-    // this._element = null;
+    this._handleDelete(this._element, this._id)
   }
 
   _likeCard() {
     const buttonLike = this._element.querySelector('.element__like-icon');
     const isLiked = buttonLike.classList.contains('element__like-icon_active')
-    buttonLike.classList.toggle('element__like-icon_active');
 
     this._handleLike(isLiked, this._id).then(data => {
-
+      buttonLike.classList.toggle('element__like-icon_active');
       this._element.querySelector('.element__like-count').textContent = data.likes.length
 
-    })
+    }).catch(err => console.error(err))
 
   }
   _setEventListeners() {
@@ -57,6 +54,8 @@ export class Card {
     this._element.querySelector('.element__delete').addEventListener('click', () => {
       this._deleteCard()
     });
-    this._elementImage.addEventListener('click', this._elementClickHandler);
+    this._elementImage.addEventListener('click', () => {
+      this._elementClickHandler(this._name, this._link)
+    });
   }
 }

@@ -2,7 +2,7 @@ import { Card } from '../components/Card.js'
 import "./index.css"
 import FormValidator from "../components/FormValidator.js";
 import Section from '../components/Section.js';
-import { initialCards, userInfoData } from '../utils/constants.js'
+import { initialCards, userInfoData, validationConfig } from '../utils/constants.js'
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -21,8 +21,8 @@ const openPopupAddCardButton = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#edit-popup');
 const avatarPopup = document.querySelector('#avatar-popup');
 const buttonEditAvatar = document.querySelector('.profile__edit-avatar');
-const newAvatarVal = document.querySelector('#avatar-input');
 
+const section = new Section('.elements')
 
 ////////  --->>>>>
 const api = new Api({
@@ -38,7 +38,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userInfo.setUserInfo({ "name": userData.name, "job": userData.about, "id": userData._id })
     userInfo.setUserAvatar(userData.avatar)
     for (let i = userCard.length - 1; i > 0; i--) {
-      cardContainer.prepend(createCard({ name: userCard[i].name, link: userCard[i].link, likes: userCard[i].likes, id: userCard[i]._id, ownerId: userCard[i].owner._id, userId: userData._id }))
+      section.addItem(createCard({ name: userCard[i].name, link: userCard[i].link, likes: userCard[i].likes, id: userCard[i]._id, ownerId: userCard[i].owner._id, userId: userData._id }))
 
     }
   })
@@ -52,30 +52,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 
 const userInfo = new UserInfo({ nameElement: '.profile__title', captionElement: '.profile__subtitle', userAvatar: ".profile__avatar" })
-userInfo.setUserInfo(userInfoData)
 
 const myPopupWithImage = new PopupWithImage('#popup-image')
 myPopupWithImage.setEventListeners()
 
-const popupProfile = new PopupWithForm('#user-popup', event => {
-  event.preventDefault();
-  popupProfile.showSavingText(true)
-  handleProfileFormSubmit(event).finally(() => {
-    popupProfile.close()
-    popupProfile.showSavingText(false)
-
-  })
-})
+const popupProfile = new PopupWithForm('#user-popup', handleProfileFormSubmit)
 popupProfile.setEventListeners()
 
-const popupCard = new PopupWithForm('#edit-popup', event => {
-  event.preventDefault();
-  popupCard.showSavingText(true)
-  handleCardFormSubmit(event).finally(() => {
-    popupCard.showSavingText(false)
-
-  })
-})
+const popupCard = new PopupWithForm('#edit-popup', handleCardFormSubmit)
 popupCard.setEventListeners()
 
 
@@ -92,15 +76,12 @@ function createCard(params) {
 
 }
 
-function handleAvatarChange(evt) {
+function handleAvatarChange(evt, items) {
   evt.preventDefault();
-
-  api.loadUserAvatar(newAvatarVal.value).then(newData => {
-    console.log(newData)
+  return api.loadUserAvatar(Object.values(items)[0]).then(newData => {
     userInfo.setUserAvatar(newData.avatar)
   }
   )
-  avatarEdit.close()
 
 }
 
@@ -108,11 +89,9 @@ function handleSubmit(element, cardId) {
   popupSubmit.open(element, cardId)
 }
 function handleDelete(element, evt) {
-  console.error(element, evt);
-  api.deleteCard(evt).then(data => {
+  return api.deleteCard(evt).then(data => {
     element.remove()
   })
-  popupSubmit.close()
 }
 
 function handleLike(isLiked, evt) {
@@ -120,24 +99,18 @@ function handleLike(isLiked, evt) {
 }
 
 // добавление записи
-function handleCardFormSubmit(evt) {
+function handleCardFormSubmit(evt, items) {
   evt.preventDefault();
-
-  return api.uploadNewCard({ name: image.value, link: title.value }).then(userCard => {
+  return api.uploadNewCard(items).then(userCard => {
     cardContainer.prepend(createCard({ name: userCard.name, link: userCard.link, id: userCard._id }))
 
-  }).then(() => {
-
-    title.value = '';
-    image.value = '';
-    popupCard.close()
   })
 
 }
 
 //обработка клика
-function handlePreviewPicture(event) {
-  myPopupWithImage.open(event.target.parentNode.textContent, event.target.src)
+function handlePreviewPicture(name, link) {
+  myPopupWithImage.open(name, link)
 }
 
 function openCardPopup(evt) {
@@ -152,11 +125,12 @@ function openPofilePopup() {
   jobInput.value = info.caption;
 }
 
-function handleProfileFormSubmit(evt) {
+function handleProfileFormSubmit(evt, items) {
   evt.preventDefault();
-  userInfo.setUserInfo(popupProfile._getInputValues())
 
-  return api.setUserInfo(popupProfile._getInputValues())
+  return api.setUserInfo(items).then(() => {
+    userInfo.setUserInfo(items)
+  })
 
 }
 
@@ -164,14 +138,7 @@ profileEditButton.addEventListener('click', openPofilePopup);
 openPopupAddCardButton.addEventListener('click', openCardPopup);
 buttonEditAvatar.addEventListener("click", () => avatarEdit.open())
 
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_invalid',
-  inputErrorClass: 'popup__field_type_error',
-  errorClass: 'error_visible'
-};
+
 
 const validFormSubmitCard = new FormValidator(validationConfig, popupAddCard);
 validFormSubmitCard.enableValidation();
