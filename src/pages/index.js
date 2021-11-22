@@ -14,8 +14,6 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const userPopup = document.querySelector('#user-popup');
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#job');
-const image = document.querySelector('#name-card');
-const title = document.querySelector('#popup-link');
 const cardContainer = document.querySelector('.elements');
 const openPopupAddCardButton = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#edit-popup');
@@ -37,10 +35,13 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, userCard]) => {
     userInfo.setUserInfo({ "name": userData.name, "job": userData.about, "id": userData._id })
     userInfo.setUserAvatar(userData.avatar)
-    for (let i = userCard.length - 1; i > 0; i--) {
-      section.addItem(createCard({ name: userCard[i].name, link: userCard[i].link, likes: userCard[i].likes, id: userCard[i]._id, ownerId: userCard[i].owner._id, userId: userData._id }))
-
+    const cardsToRender = []
+    for (let i = 0; i < userCard.length; i++) {
+      cardsToRender.push(createCard({ name: userCard[i].name, link: userCard[i].link, likes: userCard[i].likes, id: userCard[i]._id, ownerId: userCard[i].owner._id, userId: userData._id }))
     }
+    section.renderItems(cardsToRender)
+
+
   })
   .catch((err) => {
     console.error(`Ошибка. ${err}`);

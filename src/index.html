@@ -8,7 +8,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Место</title>
-  <link rel="stylesheet" src="./pages/index.css" />
 </head>
 
 <body class="page">
@@ -77,13 +76,13 @@
       <button type="button" class="popup__close" id="popup-add-close"></button>
       <h2 class="popup__title">Новое место</h2>
       <form name="profile-edit" class="popup__form" id="popup-form">
-        <input class="popup__input" type="text" name="Name" placeholder="Название" id="name-card" minlength="2"
+        <input class="popup__input" type="text" name="Name" placeholder="Название" id="name" minlength="2"
           maxlength="30" required />
-        <span id="name-card-error" class="error">Введите адрес сайта.</span>
+        <span id="name-error" class="error">Введите адрес сайта.</span>
 
-        <input class="popup__input" type="text" name="Link to picture" placeholder="Ссылка на картинку" id="popup-link"
+        <input class="popup__input" type="text" name="Link to picture" placeholder="Ссылка на картинку" id="link"
           minlength="2" required />
-        <span id="popup-link-error" class="error">Введите адрес сайта.</span>
+        <span id="link-error" class="error">Введите адрес сайта.</span>
 
         <button class="popup__button" type="submit">Сохранить</button>
       </form>
@@ -124,8 +123,6 @@
       </form>
     </div>
   </div>
-
-  <script src="pages/index.js" type="module"></script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@ export default class Api {
       .then((res) => {
         console.log(">>>> res", res)
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
   setUserInfo(data) {
@@ -38,7 +38,7 @@ export default class Api {
       .then((res) => {
         console.log(">>>>>", res, data)
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
 
@@ -52,7 +52,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
 
@@ -68,7 +68,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
   uploadNewCard(data) {
@@ -83,7 +83,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
   deleteCard(id) {
@@ -93,7 +93,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
 
@@ -104,7 +104,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
   removeLike(id) {
@@ -114,7 +114,7 @@ export default class Api {
     })
       .then((res) => {
         return this._checkServerResponse(res);
-      }).catch(err => console.error(err))
+      })
   };
 
 
