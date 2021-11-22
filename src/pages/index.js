@@ -14,13 +14,14 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const userPopup = document.querySelector('#user-popup');
 const nameInput = document.querySelector('#user-name');
 const jobInput = document.querySelector('#job');
-const cardContainer = document.querySelector('.elements');
 const openPopupAddCardButton = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#edit-popup');
 const avatarPopup = document.querySelector('#avatar-popup');
 const buttonEditAvatar = document.querySelector('.profile__edit-avatar');
 
-const section = new Section('.elements')
+const section = new Section('.elements', createCard)
+
+let userId = ''; // храним ID пользователя в качестве глобальной переменной 
 
 ////////  --->>>>>
 const api = new Api({
@@ -34,12 +35,9 @@ const api = new Api({
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, userCard]) => {
     userInfo.setUserInfo(userData.name, userData.about)
+    userId = userData._id
     userInfo.setUserAvatar(userData.avatar)
-    const cardsToRender = []
-    for (let i = 0; i < userCard.length; i++) {
-      cardsToRender.push(createCard({ name: userCard[i].name, link: userCard[i].link, likes: userCard[i].likes, id: userCard[i]._id, ownerId: userCard[i].owner._id, userId: userData._id }))
-    }
-    section.renderItems(cardsToRender)
+    section.renderItems(userCard)
 
 
   })
@@ -73,7 +71,7 @@ avatarEdit.setEventListeners()
 
 //создание карточки
 function createCard(params) {
-  return new Card(params.name, params.link, params.likes, params.id, params.ownerId, params.userId, '#element-template', handlePreviewPicture, handleSubmit, handleLike).generateCard();
+  return new Card(params.name, params.link, params.likes, params._id, params.owner._id, userId, '#element-template', handlePreviewPicture, handleSubmit, handleLike).generateCard();
 
 }
 
@@ -103,10 +101,8 @@ function handleLike(isLiked, evt) {
 function handleCardFormSubmit(evt, items) {
   evt.preventDefault();
   return api.uploadNewCard(items).then(userCard => {
-    cardContainer.prepend(createCard({ name: userCard.name, link: userCard.link, id: userCard._id }))
-
+    section.addItem(userCard)
   })
-
 }
 
 //обработка клика
@@ -115,22 +111,27 @@ function handlePreviewPicture(name, link) {
 }
 
 function openCardPopup(evt) {
+  validFormSubmitCard.resetValidation()
   popupCard.open()
 }
 
 function openPofilePopup() {
+  validFormProfile.resetValidation()
   popupProfile.open()
-
   const info = userInfo.getUserInfo()
   nameInput.value = info.name;
   jobInput.value = info.caption;
+}
+
+function openAvatarPopup() {
+  validationAvatar.resetValidation()
+  avatarEdit.open()
 }
 
 function handleProfileFormSubmit(evt, items) {
   evt.preventDefault();
 
   return api.setUserInfo(items).then(() => {
-    console.error(items);
     userInfo.setUserInfo(items['user-name'], items['job'])
   })
 
@@ -138,7 +139,7 @@ function handleProfileFormSubmit(evt, items) {
 
 profileEditButton.addEventListener('click', openPofilePopup);
 openPopupAddCardButton.addEventListener('click', openCardPopup);
-buttonEditAvatar.addEventListener("click", () => avatarEdit.open())
+buttonEditAvatar.addEventListener("click", openAvatarPopup)
 
 
 
