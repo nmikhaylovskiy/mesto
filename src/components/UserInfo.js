@@ -12,9 +12,9 @@ export default class UserInfo {
         return { name, caption }
     }
 
-    setUserInfo({ name, job }) {
+    setUserInfo(name, about) {
         this._profileName.textContent = name
-        this._profileCaption.textContent = job
+        this._profileCaption.textContent = about
     }
     setUserAvatar(userLink) {
         console.log("IN SET", userLink, this.userAvatar)

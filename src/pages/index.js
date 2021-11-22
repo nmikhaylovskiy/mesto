@@ -12,7 +12,7 @@ import PopupSubmit from '../components/PopupSubmit.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const userPopup = document.querySelector('#user-popup');
-const nameInput = document.querySelector('#name');
+const nameInput = document.querySelector('#user-name');
 const jobInput = document.querySelector('#job');
 const cardContainer = document.querySelector('.elements');
 const openPopupAddCardButton = document.querySelector('.profile__add-button');
@@ -33,7 +33,7 @@ const api = new Api({
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, userCard]) => {
-    userInfo.setUserInfo({ "name": userData.name, "job": userData.about, "id": userData._id })
+    userInfo.setUserInfo(userData.name, userData.about)
     userInfo.setUserAvatar(userData.avatar)
     const cardsToRender = []
     for (let i = 0; i < userCard.length; i++) {
@@ -130,7 +130,8 @@ function handleProfileFormSubmit(evt, items) {
   evt.preventDefault();
 
   return api.setUserInfo(items).then(() => {
-    userInfo.setUserInfo(items)
+    console.error(items);
+    userInfo.setUserInfo(items['user-name'], items['job'])
   })
 
 }
